@@ -34,10 +34,13 @@ namespace Mapps.Helpers.Extension
         /// </summary>
         /// <typeparam name="T">Object type.</typeparam>
         /// <param name="obj">Original object to reduce.</param>
-        /// <param name="propertyList">Property list. If null returns the original object to a dynamic.</param>
+        /// <param name="propertyList">Property list. If null returns the original object converted to a dynamic.</param>
         /// <returns></returns>
         public static dynamic ToDynamic<T>(this T obj, IEnumerable<string> propertyList = null) where T : class
         {
+            if (propertyList == null || propertyList.Count() == 0)
+                return (dynamic)obj;
+
             dynamic data = new ExpandoObject();
             var dataDictionary = (IDictionary<string, object>)data;
 
@@ -86,7 +89,7 @@ namespace Mapps.Helpers.Extension
             {
                 if (value == null)
                     break;
-                value = value?.GetType().GetProperty(prop)?.GetValue(value, null);
+                value = value.GetType().GetProperty(prop)?.GetValue(value, null);
             }
             return value;
         }
