@@ -1,13 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Reflection;
 
 namespace Mapps.Helpers.Extension
 {
     public static class Extensions
     {
-        // TODO: Add documentation
-        public static List<dynamic> ToDynamic<T>(this List<T> list, IEnumerable<string> propertyList) where T : class
+        /// <summary>
+        /// Reduces a generic list to a dynamic list containing the objects of the original list only with the reported properties.
+        /// </summary>
+        /// <typeparam name="T">Generic list type.</typeparam>
+        /// <param name="list">Original list to reduce. If null returns null.</param>
+        /// <param name="propertyList">Property list. If null returns the original list converted to a dynamic list.</param>
+        /// <returns>Returns a dynamic list.</returns>
+        public static List<dynamic> ToDynamic<T>(this List<T> list, IEnumerable<string> propertyList = null) where T : class
         {
             if (list == null)
                 return null;
@@ -22,8 +29,14 @@ namespace Mapps.Helpers.Extension
             return dynamicList;
         }
 
-        // TODO: Add documentation
-        public static dynamic ToDynamic<T>(this T obj, IEnumerable<string> propertyList) where T : class
+        /// <summary>
+        /// Reduces a object to a dynamic containing only the reported properties.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="obj">Original object to reduce.</param>
+        /// <param name="propertyList">Property list. If null returns the original object to a dynamic.</param>
+        /// <returns></returns>
+        public static dynamic ToDynamic<T>(this T obj, IEnumerable<string> propertyList = null) where T : class
         {
             dynamic data = new ExpandoObject();
             var dataDictionary = (IDictionary<string, object>)data;
