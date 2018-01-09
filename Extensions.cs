@@ -9,7 +9,10 @@ namespace Mapps.Helpers.Extension
         // TODO: Add documentation
         public static List<dynamic> ToDynamic<T>(this List<T> list, IEnumerable<string> propertyList) where T : class
         {
-            if (list == null || list.Count == 0)
+            if (list == null)
+                return null;
+
+            if (list.Count == 0)
                 return new List<dynamic>();
 
             var dynamicList = new List<dynamic>();
